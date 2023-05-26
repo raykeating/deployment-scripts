@@ -36,5 +36,5 @@ async function createInstance(instanceName) {
 }
 
 //createInstance("austin-auto-deploy-test-instance")
-printBlueprints()
+createInstance(process.env.INSTANCE_NAME)
 
