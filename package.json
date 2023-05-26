@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@aws-sdk/client-lightsail": "^3.335.0",
+    "dotenv": "^16.0.3"
+  }
+}
