@@ -2,10 +2,12 @@
 
 #requires following env variables
 # HOST: host to connect to, can be defined in inventory file. e.g. user@host or host
-# NEXTJS_REPO_URL: url to the repo to clone
+# NEXTJS_REPO_ID: org/repo 
 # NEXTJS_REPO_BRANCH: branch to checkout
-# STRAPI_REPO_URL: url to the repo to clone
+# STRAPI_REPO_ID: org/repo
 # STRAPI_REPO_BRANCH: branch to checkout
+# GH_USER: github username
+# GH_TOKEN: github token
 
 
 - hosts: "{{ HOST }}"
@@ -14,7 +16,7 @@
   tasks:
     - name: checkout nextjs repo
       git:
-        repo: "{{ NEXTJS_REPO_URL }}"
+        repo: https://{{ GH_USER }}:{{ GH_TOKEN }}@github.com/{{ NEXTJS_REPO_ID }}
         dest: ~/nextjs
         version: "{{ NEXTJS_REPO_BRANCH }}"
         force: yes
@@ -25,7 +27,7 @@
 
     - name: checkout strapi repo
       git:
-        repo: "{{ STRAPI_REPO_URL }}"
+        repo: https://{{ GH_USER }}:{{ GH_TOKEN }}github.com/{{ STRAPI_REPO_ID }}
         dest: ~/strapi
         version: "{{ STRAPI_REPO_BRANCH }}"
         force: yes
