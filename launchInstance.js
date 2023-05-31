@@ -1,6 +1,13 @@
 require('dotenv').config()
 const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand } = require("@aws-sdk/client-lightsail")
 
+//adds PUBLIC_SSH_KEY to authorized_keys and changes permissions
+const userDataScript = `#!/bin/bash
+echo "${process.env.PUBLIC_SSH_KEY}" >> ~/.ssh/authorized_keys
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/authorized_keys
+`
+
 const client = new LightsailClient({
 	region: process.env.AWS_REGION,
 	credentials: {
@@ -26,7 +33,7 @@ async function createInstance(instanceName) {
 		availabilityZone: process.env.AVAILABILITY_ZONE,
 		blueprintId: process.env.BLUEPRINT_ID,
 		bundleId: process.env.BUNDLE_ID,
-		//userData: "string",
+		userData: userDataScript,
 		//keyPairName: "string",
 		instanceNames: [instanceName]
 	})
