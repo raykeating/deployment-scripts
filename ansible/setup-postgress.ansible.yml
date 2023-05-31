@@ -32,7 +32,7 @@
       become_user: postgres
       become: yes
       postgresql_db:
-        name: {{ DB_NAME }}
+        name: "{{ DB_NAME }}"
 
     - name: create user
       become_user: postgres
