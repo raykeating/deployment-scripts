@@ -1,11 +1,11 @@
 ---
 
-#requires followin env variables
-# host: host to connect to, can be defined in inventory file. e.g. user@host or host
-# domain: domain name, e.g. example.com
-# strapi_domain_prefix: subdomain for strapi, e.g. strapi for strapi.example.com
+#requires following env variables
+# HOST: host to connect to, can be defined in inventory file. e.g. user@host or host
+# DOMAIN: domain name, e.g. example.com
+# STRAPI_DOMAIN_PREFIX: subdomain for strapi, e.g. strapi for strapi.example.com
 
-- hosts: "{{ host }}"
+- hosts: "{{ HOST }}"
   gather_facts: false
 
   tasks:
@@ -19,7 +19,7 @@
       become: yes
       template:
         src: nginx.config
-        dest: /etc/nginx/sites-available/{{ domain }}
+        dest: /etc/nginx/sites-available/{{ DOMAIN }}
         mode: 0644
 
     - name: kill apache
@@ -38,8 +38,8 @@
         domain: _
       become: yes
       file:
-        src: /etc/nginx/sites-available/{{ domain }}
-        dest: /etc/nginx/sites-enabled/{{ domain }}
+        src: /etc/nginx/sites-available/{{ DOMAIN }}
+        dest: /etc/nginx/sites-enabled/{{ DOMAIN }}
         state: link
 
     - name: unlink the default nginx config

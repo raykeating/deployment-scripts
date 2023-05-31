@@ -1,6 +1,12 @@
 ---
 
-- hosts: "{{ host }}"
+#requires following env variables
+# HOST: host to connect to, can be defined in inventory file. e.g. user@host or host
+# DB_NAME: name of the database to create
+# DB_USER: name of the user to create
+# DB_PASSWORD: password of the user to create
+
+- hosts: "{{ HOST }}"
   gather_facts: false
 
   tasks:
@@ -26,15 +32,15 @@
       become_user: postgres
       become: yes
       postgresql_db:
-        name: "strapi"
+        name: {{ DB_NAME }}
 
     - name: create user
       become_user: postgres
       become: yes
       postgresql_user:
-        name: "strapi"
-        db: "strapi"
-        password: "strapi"
+        name: {{ DB_USER }}
+        db: {{ DB_NAME }}
+        password: "{{ DB_PASSWORD }}"
         priv: "ALL"
         role_attr_flags: SUPERUSER
         state: present
