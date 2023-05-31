@@ -38,8 +38,8 @@
       become_user: postgres
       become: yes
       postgresql_user:
-        name: {{ DB_USER }}
-        db: {{ DB_NAME }}
+        name: "{{ DB_USER }}"
+        db: "{{ DB_NAME }}"
         password: "{{ DB_PASSWORD }}"
         priv: "ALL"
         role_attr_flags: SUPERUSER
