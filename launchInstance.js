@@ -2,10 +2,11 @@ require('dotenv').config()
 const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand } = require("@aws-sdk/client-lightsail")
 
 //adds PUBLIC_SSH_KEY to authorized_keys and changes permissions
-const userDataScript = `#!/bin/bash
-echo "${process.env.PUBLIC_SSH_KEY}" >> ~/.ssh/authorized_keys
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/authorized_keys
+const userDataScript = `#!/bin/sh
+sudo mkdir ~/.ssh
+sudo echo "${process.env.PUBLIC_SSH_KEY}" >> ~/.ssh/authorized_keys
+sudo chmod 700 ~/.ssh
+sudo chmod 600 ~/.ssh/authorized_keys
 `
 
 const client = new LightsailClient({
