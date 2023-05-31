@@ -27,7 +27,7 @@
 
     - name: checkout strapi repo
       git:
-        repo: https://{{ GH_USER }}:{{ GH_TOKEN }}github.com/{{ STRAPI_REPO_ID }}
+        repo: https://{{ GH_USER }}:{{ GH_TOKEN }}@github.com/{{ STRAPI_REPO_ID }}
         dest: ~/strapi
         version: "{{ STRAPI_REPO_BRANCH }}"
         force: yes
