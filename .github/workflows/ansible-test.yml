@@ -1,0 +1,22 @@
+name: ansible test
+
+on:
+  workflow_dispatch:
+  
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Run playbook
+        uses: dawidd6/action-ansible-playbook@v2
+        with:
+          playbook: setup-nginx.ansible.yml
+          directory: ./ansible
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          inventory: |
+            [remote]
+            bitnami@99.79.62.201
+          options: |
+            --extra-vars host=remote
+            --verbose
