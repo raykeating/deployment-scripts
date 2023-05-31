@@ -1,0 +1,37 @@
+---
+
+#requires following env variables
+# HOST: host to connect to, can be defined in inventory file. e.g. user@host or host
+# NEXTJS_REPO_URL: url to the repo to clone
+# NEXTJS_REPO_BRANCH: branch to checkout
+# STRAPI_REPO_URL: url to the repo to clone
+# STRAPI_REPO_BRANCH: branch to checkout
+
+
+- hosts: "{{ HOST }}"
+  gather_facts: false
+
+  tasks:
+    - name: checkout nextjs repo
+      git:
+        repo: "{{ NEXTJS_REPO_URL }}"
+        dest: ~/nextjs
+        version: "{{ NEXTJS_REPO_BRANCH }}"
+        force: yes
+        recursive: yes
+        clone: yes
+        depth: 1
+      register: nextjs_repo
+
+    - name: checkout strapi repo
+      git:
+        repo: "{{ STRAPI_REPO_URL }}"
+        dest: ~/strapi
+        version: "{{ STRAPI_REPO_BRANCH }}"
+        force: yes
+        recursive: yes
+        clone: yes
+        depth: 1
+      register: strapi_repo
+
+
