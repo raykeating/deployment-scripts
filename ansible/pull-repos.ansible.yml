@@ -36,4 +36,46 @@
         depth: 1
       register: strapi_repo
 
+    - name: install pm2 using npm
+      npm:
+        state: present
+        global: yes
+        production: yes
+
+    - name: install deps for nextjs
+      npm:
+        path: ~/nextjs
+        production: yes
+        registry: https://registry.npmjs.org/
+
+    - name: install deps for strapi
+      npm:
+        path: ~/strapi
+        production: yes
+        registry: https://registry.npmjs.org/
+
+    - name: build nextjs
+      command: npm run build
+      args:
+        chdir: ~/nextjs
+
+    - name: build strapi 
+      command: npm run build
+      args:
+        chdir: ~/strapi
+
+    - name: delete old pm2 processes
+      command: pm2 delete all
+
+    - name: start nextjs with pm2
+      command: pm2 start npm --name "nextjs" -- start
+      args:
+        chdir: ~/nextjs
+
+    - name: start strapi with pm2
+      command: pm2 start npm --name "strapi" -- start
+      args:
+        chdir: ~/strapi
+
+
 
