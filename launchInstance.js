@@ -3,10 +3,10 @@ const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundle
 
 //adds PUBLIC_SSH_KEY to authorized_keys and changes permissions
 const userDataScript = `#!/bin/sh
-sudo mkdir ~/.ssh
-sudo echo "${process.env.PUBLIC_SSH_KEY}" >> ~/.ssh/authorized_keys
-sudo chmod 700 ~/.ssh
-sudo chmod 600 ~/.ssh/authorized_keys
+sudo mkdir home/bitnami/.ssh
+sudo echo "${process.env.PUBLIC_SSH_KEY}" >> home/bitnami/.ssh/authorized_keys
+sudo chmod 700 home/bitnami/
+sudo chmod 600 home/bitnami/authorized_keys
 `
 
 const client = new LightsailClient({
