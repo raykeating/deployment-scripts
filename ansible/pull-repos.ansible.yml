@@ -37,10 +37,10 @@
       register: strapi_repo
 
     - name: install pm2 using npm
+      become: yes
       npm:
         state: present
         global: yes
-        production: yes
 
     - name: install deps for nextjs
       npm:
@@ -65,14 +65,17 @@
         chdir: ~/strapi
 
     - name: delete old pm2 processes
+      become_user: bitnami
       command: pm2 delete all
 
     - name: start nextjs with pm2
+      become_user: bitnami
       command: pm2 start npm --name "nextjs" -- start
       args:
         chdir: ~/nextjs
 
     - name: start strapi with pm2
+      become_user: bitnami
       command: pm2 start npm --name "strapi" -- start
       args:
         chdir: ~/strapi
