@@ -68,6 +68,7 @@
     - name: delete old pm2 processes
       become_user: bitnami
       command: pm2 delete all
+      ignore_errors: yes
 
     - name: start nextjs with pm2
       become_user: bitnami
