@@ -8,6 +8,8 @@
 # STRAPI_REPO_BRANCH: branch to checkout
 # GH_USER: github username
 # GH_TOKEN: github token
+# NEXTJS_ENV the env to use for nextjs
+# STRAPI_ENV the env to use for strapi
 
 
 - hosts: "{{ HOST }}"
@@ -54,6 +56,18 @@
         path: ~/strapi
         production: yes
         registry: https://registry.npmjs.org/
+
+    - name: copy nextjs env file
+      become_user: bitnami
+      copy:
+        content: "{{ NEXTJS_ENV }}"
+        dest: ~/nextjs/.env
+
+    - name: copy strapi env file
+      become_user: bitnami
+      copy:
+        content: "{{ STRAPI_ENV }}"
+        dest: ~/strapi/.env
 
     - name: build nextjs
       command: npm run build
