@@ -64,10 +64,10 @@
         dest: ~/nextjs/.env
 
     - name: replace nextjs env file spaces with newlines
-       become_user: bitnami
-       shell:
-         cmd: sed -i 's/ /\n/g' ~/nextjs/.env
-         executable: /bin/bash
+      become_user: bitnami
+      shell:
+        cmd: sed -i 's/ /\n/g' ~/nextjs/.env
+        executable: /bin/bash
 
     - name: replace strapi env file spaces with newlines
       become_user: bitnami
