@@ -63,17 +63,17 @@
         content: "{{ NEXTJS_ENV }}"
         dest: ~/nextjs/.env
 
-    # - name: replace nextjs env file spaces with newlines
-    #   become_user: bitnami
-    #   shell:
-    #     cmd: sed -i 's/ /\\n/g' ~/nextjs/.env
-    #     executable: /bin/bash
+    - name: replace nextjs env file spaces with newlines
+       become_user: bitnami
+       shell:
+         cmd: sed -i 's/ /\n/g' ~/nextjs/.env
+         executable: /bin/bash
 
-    # - name: replace strapi env file spaces with newlines
-    #   become_user: bitnami
-    #   shell:
-    #     cmd: sed -i 's/ /\\n/g' ~/strapi/.env
-    #     executable: /bin/bash
+    - name: replace strapi env file spaces with newlines
+      become_user: bitnami
+      shell:
+        cmd: sed -i 's/ /\\n/g' ~/strapi/.env
+        executable: /bin/bash
 
     - name: copy strapi env file
       become_user: bitnami
