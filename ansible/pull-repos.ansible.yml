@@ -63,6 +63,12 @@
         content: "{{ NEXTJS_ENV }}"
         dest: ~/nextjs/.env.local
 
+    - name: copy strapi env file
+      become_user: bitnami
+      copy:
+        content: "{{ STRAPI_ENV }}"
+        dest: ~/strapi/.env
+
     - name: replace nextjs env file spaces with newlines
       become_user: bitnami
       shell:
@@ -74,12 +80,6 @@
       shell:
         cmd: sed -i 's/ /\n/g' ~/strapi/.env
         executable: /bin/bash
-
-    - name: copy strapi env file
-      become_user: bitnami
-      copy:
-        content: "{{ STRAPI_ENV }}"
-        dest: ~/strapi/.env
 
     - name: build nextjs
       command: npm run build
