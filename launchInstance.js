@@ -1,5 +1,6 @@
 require('dotenv').config()
 const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand } = require("@aws-sdk/client-lightsail")
+const {S3Client} = require("@aws-sdk/client-s3")
 
 //adds PUBLIC_SSH_KEY to authorized_keys and changes permissions
 const userDataScript = `#!/bin/sh
