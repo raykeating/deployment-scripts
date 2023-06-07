@@ -22,7 +22,7 @@
         dest: /etc/nginx/sites-available/{{ DOMAIN }}
         mode: 0644
 
-    - name: kill apache
+    - name: kill apache (VIOLENTLY)
       become: yes
       shell: sudo /opt/bitnami/ctlscript.sh stop apache
 
