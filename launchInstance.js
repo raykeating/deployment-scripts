@@ -70,8 +70,8 @@ async function main() {
 	console.log("instance public ip is " + publicIp)
 
 	//write public ip to GITHUB_ENV file
-	fs.appendFileSync(process.env.GITHUB_ENV, `OUT_HOST_NAME=bitnami\n`)
-	fs.appendFileSync(process.env.GITHUB_ENV, `OUT_INSTANCE_IP=${publicIp}\n`)
+	fs.writeFileSync("./instance_public_ip.txt", publicIp)
+	fs.writeFileSync("./host_name.txt", "bitnami")
 }
 
 main()
