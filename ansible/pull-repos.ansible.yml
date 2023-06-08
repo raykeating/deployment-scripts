@@ -16,6 +16,14 @@
   gather_facts: false
 
   tasks:
+    - name: wait for ssh to be available
+      wait_for:
+        host: "{{ HOST }}"
+        port: 22
+        delay: 5
+        timeout: 600
+        state: started
+
     - name: checkout nextjs repo
       git:
         repo: https://{{ GH_USER }}:{{ GH_TOKEN }}@github.com/{{ NEXTJS_REPO_ID }}
