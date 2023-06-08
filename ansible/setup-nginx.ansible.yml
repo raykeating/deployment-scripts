@@ -9,13 +9,10 @@
   gather_facts: false
 
   tasks:
-    - name: wait for ssh to be available
-      wait_for:
-        host: "{{ HOST }}"
-        port: 22
+    - name: wait for connection
+      wait_for_connection:
         delay: 5
         timeout: 600
-        state: started
 
     - name: install nginx
       become: yes
