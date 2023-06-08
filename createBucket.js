@@ -37,7 +37,7 @@ async function putPublicAccessBlock(bucketName) {
 
 async function main() {
 	await createBucket(process.env.S3_BUCKET_NAME)
-	await client.waitForBucketExists({ Bucket: process.env.S3_BUCKET_NAME })
+	await client.waitUntil("bucketExists", { Bucket: process.env.S3_BUCKET_NAME })
 	await putPublicAccessBlock(process.env.S3_BUCKET_NAME)
 }
 
