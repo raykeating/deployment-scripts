@@ -101,6 +101,7 @@ async function main() {
 		console.log("static ip is " + staticIp)
 	}
 }
-//main()
+
+main()
 
 
