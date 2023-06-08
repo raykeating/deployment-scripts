@@ -1,3 +1,4 @@
+const fs = require('fs')
 require('dotenv').config()
 const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand, GetInstanceCommand, GetInstanceStateCommand } = require("@aws-sdk/client-lightsail")
 const { S3Client } = require("@aws-sdk/client-s3")
@@ -67,6 +68,10 @@ async function main() {
 	const instance = await getInstance(process.env.INSTANCE_NAME)
 	const publicIp = instance.instance.publicIpAddress
 	console.log("instance public ip is " + publicIp)
+
+	//write public ip to GITHUB_ENV file
+	fs.writeFileSync(process.env.GITHUB_ENV, `OUT_HOST_NAME=bitnami\n`)
+	fs.writeFileSync(process.env.GITHUB_ENV, `OUT_INSTANCE_IP=${publicIp}\n`)
 }
 
 main()
