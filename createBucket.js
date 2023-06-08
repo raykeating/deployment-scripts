@@ -1,5 +1,5 @@
 require('dotenv').config()
-const { S3Client, CreateBucketCommand, PutPublicAccessBlockCommand } = require("@aws-sdk/client-s3")
+const { S3Client, CreateBucketCommand, PutPublicAccessBlockCommand, waitUntilBucketExists } = require("@aws-sdk/client-s3")
 
 const client = new S3Client({
 	region: process.env.AWS_REGION,
@@ -37,7 +37,7 @@ async function putPublicAccessBlock(bucketName) {
 
 async function main() {
 	await createBucket(process.env.S3_BUCKET_NAME)
-	await client.waitUntil("bucketExists", { Bucket: process.env.S3_BUCKET_NAME })
+	await waitUntilBucketExists({ client, maxWaitTime: 60, Bucket: process.env.S3_BUCKET_NAME })
 	await putPublicAccessBlock(process.env.S3_BUCKET_NAME)
 }
 
