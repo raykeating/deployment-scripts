@@ -1,6 +1,6 @@
 const fs = require('fs')
 require('dotenv').config()
-const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand, GetInstanceCommand, GetInstanceStateCommand, AllocateStaticIpCommand, AttachStaticIpCommand } = require("@aws-sdk/client-lightsail")
+const { LightsailClient, CreateInstancesCommand, GetBlueprintsCommand, GetBundlesCommand, GetInstanceCommand, GetInstanceStateCommand, AllocateStaticIpCommand, AttachStaticIpCommand, GetStaticIpCommand } = require("@aws-sdk/client-lightsail")
 const { S3Client } = require("@aws-sdk/client-s3")
 
 const runningStateCheckTimeout = 600
@@ -71,6 +71,12 @@ async function attachStaticIp(instanceName, staticIpName) {
 	return data
 }
 
+async function getStaticIp(staticIpName) {
+	const getStaticIpCommand = new GetStaticIpCommand({ staticIpName: staticIpName })
+	const data = await client.send(getStaticIpCommand)
+	return data.staticIp.ipAddress
+}
+
 async function main() {
 	//create instance
 	console.log("creating instance")
@@ -85,14 +91,16 @@ async function main() {
 	fs.writeFileSync("./instance_public_ip.txt", publicIp)
 	fs.writeFileSync("./host_name.txt", "bitnami")
 
+	//create static ip
 	const createStaticIP = process.env.CREATE_STATIC_IP
 	if (createStaticIP == "true") {
 		console.log("creating static ip")
 		await allocateStaticIp()
 		await attachStaticIp(process.env.INSTANCE_NAME, `${process.env.INSTANCE_NAME}-static-ip`)
+		const staticIp = await getStaticIp(`${process.env.INSTANCE_NAME}-static-ip`)
+		console.log("static ip is " + staticIp)
 	}
 }
-
-main()
+//main()
 
 
