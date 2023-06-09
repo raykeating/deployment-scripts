@@ -94,12 +94,7 @@ async function main() {
 
 	//get instance public ip
 	const instance = await getInstance(process.env.INSTANCE_NAME)
-	const publicIp = instance.instance.publicIpAddress
-	console.log("instance public ip is " + publicIp)
-
-	//write public ip to GITHUB_ENV file
-	fs.writeFileSync("./instance_public_ip.txt", publicIp)
-	fs.writeFileSync("./host_name.txt", "bitnami")
+	let publicIp = instance.instance.publicIpAddress
 
 	//create static ip
 	const createStaticIP = process.env.CREATE_STATIC_IP
@@ -108,8 +103,14 @@ async function main() {
 		await allocateStaticIp()
 		await attachStaticIp(process.env.INSTANCE_NAME, `${process.env.INSTANCE_NAME}-static-ip`)
 		const staticIp = await getStaticIp(`${process.env.INSTANCE_NAME}-static-ip`)
-		console.log("static ip is " + staticIp)
+		publicIp = staticIp
 	}
+
+	console.log("instance public ip is " + publicIp)
+
+	//write public ip to file for actions to read
+	fs.writeFileSync("./instance_public_ip.txt", publicIp)
+	fs.writeFileSync("./host_name.txt", "bitnami")
 }
 
 main()
