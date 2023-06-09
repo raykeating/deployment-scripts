@@ -82,6 +82,16 @@ async function main() {
 	console.log("creating instance")
 	await createInstance(process.env.INSTANCE_NAME)
 
+	//wait for instance to be running
+	console.log("waiting for instance to be running")
+	let state = await getInstanceState(process.env.INSTANCE_NAME)
+	let startTime = Date.now()
+	while ((!state || state.name != "running") && Date.now() - startTime < runningStateCheckTimeout * 1000) {
+		await new Promise(resolve => setTimeout(resolve, runningStateCheckInterval * 1000))
+		state = await getInstanceState(process.env.INSTANCE_NAME)
+		console.log("instance state is " + (state.name || "undefined"))
+	}
+
 	//get instance public ip
 	const instance = await getInstance(process.env.INSTANCE_NAME)
 	const publicIp = instance.instance.publicIpAddress
