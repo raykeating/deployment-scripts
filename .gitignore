@@ -137,3 +137,7 @@ hosts
 
 #vscode folder
 .vscode
+
+#temp files
+instance_public_ip.txt
+host_name.txt
