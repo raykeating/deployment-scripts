@@ -26,5 +26,5 @@
         name: backup-strapi
         minute: 0
         hour: 0
-        job: ~/backup-strapi.sh
+        job: ~/backup-strapi.sh $({{ NEXTJS_REPO_ID }} | tr / -)
         state: present
