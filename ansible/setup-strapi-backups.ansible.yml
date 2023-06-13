@@ -1,0 +1,30 @@
+---
+
+- hosts: "{{ HOST }}"
+  gather_facts: false
+
+  tasks:
+    - name: wait for connection
+      wait_for_connection:
+        delay: 5
+        timeout: 600
+
+    - name: configure AWS cli
+      shell: |
+        aws configure set aws_access_key_id {{ AWS_BACKUP_PUBLIC_KEY }}
+        aws configure set aws_secret_access_key {{ AWS_BACKUP_PRIVATE_KEY }}
+        aws configure set default.region {{ AWS_REGION }}
+
+    - name: copy backup-strapi.sh
+      copy:
+        src: backup-strapi.sh
+        dest: ~/backup-strapi.sh
+        mode: 0755
+        
+    - name: setup cron job to run script every day at midnight
+      cron:
+        name: backup-strapi
+        minute: 0
+        hour: 0
+        job: ~/backup-strapi.sh
+        state: present
