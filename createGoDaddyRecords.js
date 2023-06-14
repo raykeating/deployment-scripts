@@ -30,7 +30,7 @@ async function addARecord(name, value, domain) {
 async function doesARecordExist(name, domain) {
 	const url = `https://api.godaddy.com/v1/domains/${domain}/records/A/${name}`
 	const headers = {
-		'Authorization': `sso-key ${apiKey}:${apiSecret}`,
+		'Authorization': `sso-key ${process.env.GO_DADDY_PUBLIC_KEY}:${process.env.GO_DADDY_PRIVATE_KEY}`,
 	}
 	const response = await axios.get(url, {
 		headers: headers
