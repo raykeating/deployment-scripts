@@ -42,7 +42,7 @@ async function doesARecordExist(name, domain) {
 async function getRecords() {
 	const url = `https://api.godaddy.com/v1/domains/${domain}/records/A/@`
 	const headers = {
-		'Authorization': `sso-key ${publicKey}:${privateKey}`,
+		'Authorization': `sso-key ${process.env.GO_DADDY_PUBLIC_KEY}:${process.env.GO_DADDY_PRIVATE_KEY}`,
 		'Content-Type': 'application/json'
 	}
 	const response = await axios.get(url, { headers })
@@ -56,7 +56,7 @@ async function main() {
 	const subDomain = domainPaths.subDomain
 	const strapiDomainPrefix = domainPaths.strapiDomainPrefix
 
-	//make sure none of the records already exists
+	//make sure none of the records already exist
 	if (doesARecordExist(subDomain, rootDomain)) throw new Error(`A record already exists for ${subDomain}`)
 	if (doesARecordExist(`${strapiDomainPrefix}.${subDomain}`, rootDomain)) throw new Error(`A record already exists for ${strapiDomainPrefix}.${subDomain}`)
 	if (doesARecordExist(`www.${subDomain}`, rootDomain)) throw new Error(`A record already exists for www.${subDomain}`)
