@@ -36,6 +36,10 @@ async function doesARecordExist(name, domain) {
 		headers: headers
 	})
 
+	console.log(response)
+	console.log(response.status)
+	console.log(response.data)
+	
 	return response.status === 200
 }
 
