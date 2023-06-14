@@ -40,7 +40,7 @@ async function doesARecordExist(name, domain) {
 	console.log(response.status)
 	console.log(response.data)
 	
-	return response.status === 200 && response?.data?.length === 0
+	return response.status === 200 && response?.data?.length !== 0
 }
 
 async function getRecords() {
