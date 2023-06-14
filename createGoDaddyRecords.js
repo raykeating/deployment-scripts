@@ -68,6 +68,8 @@ async function main() {
 	//console.log(rootDomain, subDomain, `${strapiDomainPrefix}.${subDomain}`, `www.${subDomain}`)
 }
 
+main() 
+
 
 
 
