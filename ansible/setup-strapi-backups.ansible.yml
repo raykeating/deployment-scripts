@@ -34,10 +34,7 @@
       register: path
 
     - name: set the PATH variable for cron
-      become: true
-      become_user: bitnami
-      cronvar:
+      cron:
         name: PATH
-        value: "{{ path.stdout }}"
-        cron_file: backup-strapi
-        state: present
+        env: yes
+        job: "{{ path.stdout }}"
