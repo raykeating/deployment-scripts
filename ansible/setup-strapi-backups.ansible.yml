@@ -28,3 +28,14 @@
         hour: 0
         job: /home/bitnami/backup-strapi.sh $(echo {{ NEXTJS_REPO_ID }} | tr / -)
         state: present
+
+    - name: register the PATH variable
+      shell: echo $PATH
+      register: path
+
+    - name: set the PATH variable for cron
+      cronvar:
+        name: PATH
+        value: "{{ path.stdout }}"
+        cron_file: backup-strapi
+        state: present
