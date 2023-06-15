@@ -44,6 +44,12 @@
         path: /etc/nginx/sites-enabled/*
         state: absent
 
+    - name: delete everything in sites-available
+      become: yes
+      file:
+        path: /etc/nginx/sites-available/*
+        state: absent
+
     - name: enable nginx config
       vars: 
         domain: _
