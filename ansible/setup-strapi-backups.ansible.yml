@@ -34,6 +34,7 @@
       register: path
 
     - name: set the PATH variable for cron
+      become: true
       cronvar:
         name: PATH
         value: "{{ path.stdout }}"
