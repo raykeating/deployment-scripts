@@ -3,11 +3,11 @@
 #requires following env variables
 # HOST: host to connect to, can be defined in inventory file. e.g. user@host or host
 
-- hosts: "{{ HOST }}"
-  gather_facts: false
-
 - name: import setup-nginx playbook
   import_playbook: setup-nginx.ansible.yml
+
+- hosts: "{{ HOST }}"
+  gather_facts: false
 
   tasks:
     - name: wait for connection
