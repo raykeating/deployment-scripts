@@ -38,6 +38,12 @@
         enabled: yes
         state: started
 
+    - name: unlink everything in sites-enabled
+      become: yes
+      file:
+        path: /etc/nginx/sites-enabled/*
+        state: absent
+
     - name: enable nginx config
       vars: 
         domain: _
@@ -46,12 +52,6 @@
         src: /etc/nginx/sites-available/{{ DOMAIN }}
         dest: /etc/nginx/sites-enabled/{{ DOMAIN }}
         state: link
-
-    - name: unlink the default nginx config
-      become: yes
-      file:
-        path: /etc/nginx/sites-enabled/default
-        state: absent
 
     - name: restart nginx
       become: yes

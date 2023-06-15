@@ -6,6 +6,9 @@
 - hosts: "{{ HOST }}"
   gather_facts: false
 
+- name: import setup-nginx playbook
+  import_playbook: setup-nginx.ansible.yml
+
   tasks:
     - name: wait for connection
       wait_for_connection:
@@ -40,9 +43,6 @@
     - name: delete any existing certificates
       become: true
       shell: printf "\n" | sudo certbot delete --force-interactive
-
-    - name: import setup-nginx playbook
-      import_playbook: setup-nginx.ansible.yml
   
     - name: run certbot
       become: true
