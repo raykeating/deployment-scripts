@@ -35,6 +35,7 @@
 
     - name: set the PATH variable for cron
       become: true
+      become_user: bitnami
       cronvar:
         name: PATH
         value: "{{ path.stdout }}"
