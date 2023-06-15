@@ -109,7 +109,7 @@
 
     - name: start strapi with pm2
       become_user: bitnami
-      command: pm2 start npm --name "strapi" -- start
+      command: NODE_ENV=production pm2 start npm --name "strapi" -- start
       args:
         chdir: ~/strapi
 
