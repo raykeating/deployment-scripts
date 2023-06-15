@@ -43,6 +43,7 @@
     - name: delete any existing certificates
       become: true
       shell: printf "\n" | sudo certbot delete --force-interactive
+      ignore_errors: true
   
     - name: run certbot
       become: true
