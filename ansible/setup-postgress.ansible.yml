@@ -49,5 +49,23 @@
         priv: "ALL"
         role_attr_flags: SUPERUSER
         state: present
+    
+    - name: create dev database
+      become_user: postgres
+      become: yes
+      postgresql_db:
+        name: "{{ DB_NAME }}_dev"
+
+    - name: create dev user
+      become_user: postgres
+      become: yes
+      postgresql_user:
+        name: "{{ DB_USER }}_dev"
+        db: "{{ DB_NAME }}_dev"
+        password: "{{ DB_PASSWORD }}"
+        priv: "ALL"
+        role_attr_flags: SUPERUSER
+        state: present
+      
 
      
