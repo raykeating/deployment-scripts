@@ -24,13 +24,6 @@
       become: yes
       shell: sudo /opt/bitnami/ctlscript.sh stop apache
 
-    - name: start nginx
-      become: yes
-      service:
-        name: nginx
-        enabled: yes
-        state: started
-
     - name: delete everything in sites-enabled
       become: yes
       shell: sudo rm -rf /etc/nginx/sites-enabled/*
@@ -38,6 +31,13 @@
     - name: delete everything in sites-available
       become: yes
       shell: sudo rm -rf /etc/nginx/sites-available/*
+
+    - name: start nginx
+      become: yes
+      service:
+        name: nginx
+        enabled: yes
+        state: started
 
     - name: copy nginx config template
       become: yes
