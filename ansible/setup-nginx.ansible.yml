@@ -33,11 +33,11 @@
 
     - name: delete everything in sites-enabled
       become: yes
-      shell: rm -rf /etc/nginx/sites-enabled/*
-      
+      shell: sudo rm -rf /etc/nginx/sites-enabled/*
+
     - name: delete everything in sites-available
       become: yes
-      shell: rm -rf /etc/nginx/sites-available/*
+      shell: sudo rm -rf /etc/nginx/sites-available/*
 
     - name: copy nginx config template
       become: yes
