@@ -31,17 +31,13 @@
         enabled: yes
         state: started
 
-    - name: unlink everything in sites-enabled
+    - name: delete everything in sites-enabled
       become: yes
-      file:
-        path: /etc/nginx/sites-enabled/*
-        state: absent
-
+      shell: rm -rf /etc/nginx/sites-enabled/*
+      
     - name: delete everything in sites-available
       become: yes
-      file:
-        path: /etc/nginx/sites-available/*
-        state: absent
+      shell: rm -rf /etc/nginx/sites-available/*
 
     - name: copy nginx config template
       become: yes
