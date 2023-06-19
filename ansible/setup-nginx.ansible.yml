@@ -20,13 +20,6 @@
         name: nginx
         state: latest
 
-    - name: copy nginx config template
-      become: yes
-      template:
-        src: nginx.config
-        dest: /etc/nginx/sites-available/{{ DOMAIN }}
-        mode: 0644
-
     - name: kill apache (VIOLENTLY)
       become: yes
       shell: sudo /opt/bitnami/ctlscript.sh stop apache
@@ -49,6 +42,13 @@
       file:
         path: /etc/nginx/sites-available/*
         state: absent
+
+    - name: copy nginx config template
+      become: yes
+      template:
+        src: nginx.config
+        dest: /etc/nginx/sites-available/{{ DOMAIN }}
+        mode: 0644
 
     - name: enable nginx config
       vars: 
