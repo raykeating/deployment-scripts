@@ -1,0 +1,25 @@
+---
+
+- hosts: "{{ HOST }}"
+  gather_facts: false
+
+  tasks:
+    - name: wait for connection
+      wait_for_connection:
+        delay: 5
+        timeout: 600
+
+    - name: configure AWS cli
+      shell: |
+        aws configure set aws_access_key_id {{ AWS_BACKUP_PUBLIC_KEY }}
+        aws configure set aws_secret_access_key {{ AWS_BACKUP_PRIVATE_KEY }}
+        aws configure set default.region {{ AWS_REGION }}
+
+    - name: copy backup-strapi.sh
+      copy:
+        src: backup-strapi.sh
+        dest: ~/backup-strapi.sh
+        mode: 0755
+        
+    - name: run script
+      shell: /home/bitnami/backup-strapi.sh $(echo {{ NEXTJS_REPO_ID }} | tr / -)
