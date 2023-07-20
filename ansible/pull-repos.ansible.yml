@@ -10,6 +10,7 @@
 # GH_TOKEN: github token
 # NEXTJS_ENV the env to use for nextjs
 # STRAPI_ENV the env to use for strapi
+# PRODUCTION: whether to build or run in development mode (true/false)
 
 
 - hosts: "{{ HOST }}"
@@ -91,10 +92,17 @@
       args:
         chdir: ~/nextjs
 
+    - name: run nextjs in dev mode
+      command: npm run dev
+      args:
+        chdir: ~/nextjs
+      when: {{ PRODUCTION }} != "true"
+
     - name: build strapi 
       command: npm run build
       args:
         chdir: ~/strapi
+      when: {{ PRODUCTION }} == "true"
 
     - name: delete old pm2 processes
       become_user: bitnami
